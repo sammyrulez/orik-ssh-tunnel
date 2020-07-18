@@ -11,9 +11,9 @@ jobs:
     # This job runs on Linux
     runs-on: macos-10.15
     steps:
-      - name: Init
+      - name: Checkout
         uses: actions/checkout@v2
-        id: Checkout
+      - name: Init
         run: pip install py2app
       # Add tests run
       - name: Build App
