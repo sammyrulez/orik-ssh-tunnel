@@ -138,3 +138,5 @@ dmypy.json
 cython_debug/
 .vscode/launch.json
 .vscode/settings.json
+.DS_Store
+OrikSSH.dmg

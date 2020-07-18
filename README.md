@@ -7,7 +7,7 @@ If there is any feature you thisn would be usefull please open a pr
 
 ## Features
 
-* Read your ~/.ssh/config file and build a top bar menu
+* Read your _~/.ssh/config_ file and build a top bar menu
 * Open a ssh tunnel on the selected item
 
 
