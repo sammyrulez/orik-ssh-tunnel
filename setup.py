@@ -10,7 +10,7 @@ OPTIONS = {
     'plist': {
         'LSUIElement': True,
     },
-    'packages': ['rumps', 'paramiko', 'cffi', 'cryptography'],
+    'packages': ['rumps', 'paramiko', 'cffi', 'cryptography', 'sshtunnel'],
 }
 
 setup(
