@@ -1,0 +1,6 @@
+Host test-bastion
+  HostName 123.213.333.22
+  User jon.doe
+  Localforward 2201 123.139.22.321:22
+  Localforward 2202 123.139.22.21:22
+  Localforward 18080 123.139.22.43:8080
