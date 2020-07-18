@@ -11,7 +11,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Init
-        run: pip install py2app
+        run: |
+          pip install py2app
+          pip install -r requirements.txt
       # Add tests run
       - name: Build App
         run: python setup.py py2app
