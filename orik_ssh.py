@@ -14,7 +14,7 @@ class OrikBarApp(rumps.App):
     def _forward_id(self, forward):
         return forward.host + ":" + str(forward.remote_port) + " -> " + str(forward.local_port)
 
-    def _find_config(self, menu_title: str):
+    def _find_config(self, menu_title):
         for conf in self.configs:
             if menu_title.startswith(conf.host):
                 logging.info(conf.forewards)
