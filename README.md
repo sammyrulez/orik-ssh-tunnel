@@ -1,5 +1,7 @@
-# orik-ssh-tunnel
-Mac OS ssh tunnel manager UI
+# Orik-SSH
+
+Mac OS SSH tunnel manager UI
+
 [![Build App Package](https://github.com/sammyrulez/orik-ssh-tunnel/workflows/Build%20App%20Package/badge.svg)](https://github.com/sammyrulez/orik-ssh-tunnel/releases/download/refs%2Fheads%2Fbuild-app/OrikSSH.dmg)
 
 
