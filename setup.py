@@ -1,13 +1,16 @@
 from setuptools import setup
 
-APP = ['orik_main.py']
-DATA_FILES = []
+__version__ = '0.0.1'
+__author__ = 'Sam Reghenzi'
+
+APP = ['orik_ssh.py']
+DATA_FILES = ['dwarf-helmet.png', 'dwarf-helmet.icns']
 OPTIONS = {
     'argv_emulation': True,
     'plist': {
         'LSUIElement': True,
     },
-    'packages': ['rumps'],
+    'packages': ['rumps', 'paramiko', 'cffi', 'cryptography', 'sshtunnel'],
 }
 
 setup(
