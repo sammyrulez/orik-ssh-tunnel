@@ -27,8 +27,11 @@ If there is any feature you that would be usefull please open a issue
 * More unit tests
 * ~~Issue template~~
 * ~~Github actions~~
-* Publish app package
-* Add badges
+*  ~~Publish app package~~
+* Add  coverage badge
+* Add  version badge
+* Embed python3 runtime
+* build a website
 
 
 
