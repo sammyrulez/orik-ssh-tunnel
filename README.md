@@ -30,7 +30,11 @@ If there is any feature you that would be usefull please open a issue
 * ~~Issue template~~
 * ~~Github actions~~
 * ~~Publish app package~~
-* Add badges
+* Add  coverage badge
+* Add  version badge
+* Embed python3 runtime
+* build a website
+
 
 
 
