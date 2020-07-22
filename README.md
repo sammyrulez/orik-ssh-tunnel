@@ -5,9 +5,6 @@
 
 Mac OS SSH tunnel manager UI
 
-![Orik icon and logo](https://github.com/sammyrulez/orik-ssh-tunnel/raw/master/dwarf-helmet.png)
-
-
 Tired of having hard time remembering what tulle was active and not, what remote service was what, poer numebr binding... I end up building this tool. I hope it helps you as well.
 
 If there is any feature you that would be usefull please open a issue
