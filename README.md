@@ -24,6 +24,27 @@ If there is any feature you that would be usefull please open a issue
 * _"copy url in clipboard"_
 * Prefereces GUI
 
+## Installation
+
+You can download the imgage with the app from the [Releases tab](https://github.com/sammyrulez/orik-ssh-tunnel/releases/download/refs%2Fheads%2Fbuild-app/OrikSSH.dmg)
+
+## Build from sources:
+
+```
+git clone https://github.com/sammyrulez/orik-ssh-tunnel.git
+cd orik-ssh-tunnel
+```
+
+The creation of a virtual env is raccomanded
+
+```
+pip install py2app
+pip install -r requirements.txt
+pip install -r requirements.txt
+```
+
+The app build is in `dist/orik_ssh.app`
+
 ## Todos
 
 - [ ]More unit tests
