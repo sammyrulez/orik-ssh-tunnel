@@ -1,8 +1,12 @@
 
 from os.path import expanduser
+from os import path
+import os
 import logging
 import sys
+import csv
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+home = expanduser("~")
 
 
 class HostConfig(object):
@@ -16,6 +20,9 @@ class HostConfig(object):
 
     def __str__(self):
         return "{}:{} -> {}".format(self.host, self.remote_port, self.local_port)
+
+    def code(self):
+        return self.host + ":" + str(self.remote_port) + " -> " + str(self.local_port)
 
 
 class UserConfig(object):
@@ -70,3 +77,45 @@ class ConfigReader(object):
         configs = list(filter(lambda x: x and len(x.forewards), configs))
         logging.info("configs %s", configs)
         return configs
+
+
+class AppConfig(HostConfig):
+
+    def __init__(self):
+        self.custom_cert = ""
+        self.ask_for_password = False
+        self.label = None
+        super().__init__()
+
+    def display_label(self):
+        if self.label:
+            return self.label
+        else:
+            return self.code()
+
+
+CSV_HEADERS = ["Bastion", "Host Name,User", "Remote Host", "Remote Port",
+               "Local Port", "Alias", "Protocol", "Ask for password", "Custom cert"]
+SETTINGS_PATH = home+'/.orik_ssh/config.csv'
+
+
+class AppConfigManager(object):
+
+    def write_file_from_config(self, app_configs,  settings_file_path=SETTINGS_PATH):
+        setting_dir = path.dirname(settings_file_path)
+        logging.info(setting_dir)
+        if not path.exists(setting_dir):
+            os.makedirs(setting_dir)
+            with open(settings_file_path, 'w') as cfg_file:
+                writer = csv.writer(cfg_file)
+                writer.writerow(CSV_HEADERS)
+                for cfg in app_configs:
+                    for fwd in cfg.forewards:
+                        writer.writerow(
+                            (cfg.host, cfg.host_name, cfg.user, fwd.host, fwd.local_port, fwd.remote_port))
+
+    def read_file(self, settings_file_path=SETTINGS_PATH):
+        with open(settings_file_path, 'r') as cfg_file:
+            cfg_file_reader = csv.reader(cfg_file.readlines())
+            for row in cfg_file_reader:
+                logging.info(row)
