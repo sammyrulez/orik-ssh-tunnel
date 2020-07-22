@@ -1,7 +1,7 @@
 import logging
 import sys
 import rumps
-from orik.config_reader import ConfigReader
+from orik.config_manager import ConfigReader, AppConfigManager
 import paramiko
 from sshtunnel import SSHTunnelForwarder
 
@@ -11,15 +11,12 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 class OrikBarApp(rumps.App):
 
-    def _forward_id(self, forward):
-        return forward.host + ":" + str(forward.remote_port) + " -> " + str(forward.local_port)
-
     def _find_config(self, menu_title):
         for conf in self.configs:
             if menu_title.startswith(conf.host):
                 logging.info(conf.forewards)
                 for forward in conf.forewards:
-                    if menu_title.endswith(self._forward_id(forward)):
+                    if menu_title.endswith(forward.code()):
                         return (conf, forward)
         return (None, None)
 
@@ -61,10 +58,13 @@ class OrikBarApp(rumps.App):
         self._running_tunnels = {}
         cr = ConfigReader()
         self.configs = cr.read_config()
+        app_cfg = AppConfigManager()
+        app_cfg.write_file_from_config(self.configs)  # TODO SYNC FUNCTION
+        self.configs = app_cfg.read_file()
         for config in self.configs:
             for forward in config.forewards:
                 self.menu.add(rumps.MenuItem(
-                    title=config.host + " " + self._forward_id(forward), callback=self._host_callback))
+                    title=config.host + " " + forward.display_label(), callback=self._host_callback))
 
 
 if __name__ == "__main__":

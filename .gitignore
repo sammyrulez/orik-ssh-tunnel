@@ -140,3 +140,5 @@ cython_debug/
 .vscode/settings.json
 .DS_Store
 OrikSSH.dmg
+out.*
+config.csv
