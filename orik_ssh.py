@@ -59,11 +59,12 @@ class OrikBarApp(rumps.App):
         cr = ConfigReader()
         self.configs = cr.read_config()
         app_cfg = AppConfigManager()
-        app_cfg.write_file_from_config(self.configs)
+        app_cfg.write_file_from_config(self.configs)  # TODO SYNC FUNCTION
+        self.configs = app_cfg.read_file()
         for config in self.configs:
             for forward in config.forewards:
                 self.menu.add(rumps.MenuItem(
-                    title=config.host + " " + forward.code(), callback=self._host_callback))
+                    title=config.host + " " + forward.display_label(), callback=self._host_callback))
 
 
 if __name__ == "__main__":

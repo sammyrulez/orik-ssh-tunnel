@@ -141,3 +141,4 @@ cython_debug/
 .DS_Store
 OrikSSH.dmg
 out.*
+config.csv

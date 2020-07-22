@@ -85,6 +85,7 @@ class AppConfig(HostConfig):
         self.custom_cert = ""
         self.ask_for_password = False
         self.label = None
+        self.protocol = None
         super().__init__()
 
     def display_label(self):
@@ -94,7 +95,7 @@ class AppConfig(HostConfig):
             return self.code()
 
 
-CSV_HEADERS = ["Bastion", "Host Name,User", "Remote Host", "Remote Port",
+CSV_HEADERS = ["Bastion", "Host Name", "User", "Remote Host", "Remote Port",
                "Local Port", "Alias", "Protocol", "Ask for password", "Custom cert"]
 SETTINGS_PATH = home+'/.orik_ssh/config.csv'
 
@@ -115,7 +116,27 @@ class AppConfigManager(object):
                             (cfg.host, cfg.host_name, cfg.user, fwd.host, fwd.local_port, fwd.remote_port))
 
     def read_file(self, settings_file_path=SETTINGS_PATH):
+        configs = []
         with open(settings_file_path, 'r') as cfg_file:
-            cfg_file_reader = csv.reader(cfg_file.readlines())
+            cfg_file_reader = csv.reader(cfg_file.readlines()[1:])
+            uc = UserConfig()
             for row in cfg_file_reader:
-                logging.info(row)
+                logging.info(" row: |%s| %s %s", uc.host, row[0], row[3])
+                if uc.host and row[0] != uc.host:
+                    configs.append(uc)
+                    uc = UserConfig()
+                uc.host = row[0]
+                uc.host_name = row[1]
+
+                uc.user = row[2]
+                ac = AppConfig()
+                ac.host = row[3]
+                ac.remote_port = row[4]
+                ac.local_port = row[5]
+                ac.label = row[6]
+                ac.protocol = row[7]
+                ac.ask_for_password = row[8]
+                ac.custom_cert = row[9]
+                uc.forewards.append(ac)
+            configs.append(uc)
+        return configs
