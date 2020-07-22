@@ -102,7 +102,11 @@ SETTINGS_PATH = home+'/.orik_ssh/config.csv'
 
 class AppConfigManager(object):
 
-    def write_file_from_config(self, app_configs,  settings_file_path=SETTINGS_PATH):
+    def sync_file_from_config(self,  settings_file_path=SETTINGS_PATH):
+
+        cr = ConfigReader()
+        ssh_configs = cr.read_config()
+
         setting_dir = path.dirname(settings_file_path)
         logging.info(setting_dir)
         if not path.exists(setting_dir):
@@ -110,10 +114,20 @@ class AppConfigManager(object):
             with open(settings_file_path, 'w') as cfg_file:
                 writer = csv.writer(cfg_file)
                 writer.writerow(CSV_HEADERS)
-                for cfg in app_configs:
+                for cfg in ssh_configs:
                     for fwd in cfg.forewards:
                         writer.writerow(
                             (cfg.host, cfg.host_name, cfg.user, fwd.host, fwd.local_port, fwd.remote_port))
+        else:
+            with open(settings_file_path, 'ra') as cfg_file:
+                cfg_file_reader = list(csv.reader(cfg_file.readlines()[1:]))
+                writer = csv.writer(cfg_file)
+                for cfg in ssh_configs:
+                    for app_cfg in cfg_file_reader:
+                        if cfg.host != app_cfg[0]:
+                            writer.writerow(
+                                (cfg.host, cfg.host_name, cfg.user, fwd.host, fwd.local_port, fwd.remote_port))
+        return self.read_file(settings_file_path)
 
     def read_file(self, settings_file_path=SETTINGS_PATH):
         configs = []

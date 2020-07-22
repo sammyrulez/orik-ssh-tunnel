@@ -1,7 +1,7 @@
 import logging
 import sys
 import rumps
-from orik.config_manager import ConfigReader, AppConfigManager
+from orik.config_manager import AppConfigManager
 import paramiko
 from sshtunnel import SSHTunnelForwarder
 
@@ -56,11 +56,10 @@ class OrikBarApp(rumps.App):
             "Orik", icon='./dwarf-helmet.png', )
         self.menu = []
         self._running_tunnels = {}
-        cr = ConfigReader()
-        self.configs = cr.read_config()
+
         app_cfg = AppConfigManager()
-        app_cfg.write_file_from_config(self.configs)  # TODO SYNC FUNCTION
-        self.configs = app_cfg.read_file()
+        self.configs = app_cfg.sync_file_from_config(ssh_configs)
+
         for config in self.configs:
             for forward in config.forewards:
                 self.menu.add(rumps.MenuItem(
