@@ -16,7 +16,9 @@ class OrikBarApp(rumps.App):
             if menu_title.startswith(conf.host):
                 logging.info(conf.forewards)
                 for forward in conf.forewards:
-                    if menu_title.endswith(forward.code()):
+                    logging.info("item x = %s %s %s", menu_title,
+                                 forward.display_label(), str(menu_title.endswith(forward.display_label())))
+                    if menu_title.endswith(forward.display_label()):
                         return (conf, forward)
         return (None, None)
 
@@ -33,23 +35,36 @@ class OrikBarApp(rumps.App):
             conf, forward = self._find_config(menu_item.title)
 
             if conf:
-                logging.info("tunnel host: %s, user, forward host %s:%d",
+                logging.info("tunnel host: %s, user %s , forward host %s:%d",
                              conf.host_name, conf.user, forward.host, int(forward.remote_port))
-                server = SSHTunnelForwarder(
-                    conf.host_name,
-                    ssh_username=conf.user,
-                    remote_bind_address=(forward.host, forward.remote_port),
-                    local_bind_address=("0.0.0.0", forward.local_port),
-                    # ssh_password="xyz"
-                )
-                server.start()
-                logging.info(server.local_bind_port)
+                try:
+                    server = SSHTunnelForwarder(
+                        conf.host_name,
+                        ssh_username=conf.user,
+                        remote_bind_address=(
+                            forward.host, int(forward.remote_port)),
+                        local_bind_address=(
+                            "0.0.0.0", int(forward.local_port)),
+                        # ssh_password="xyz"
+                    )
+                    server.start()
+                except Exception as e:
+                    logging.error(str(e))
+                logging.info(" SErver started %s", conf.host_name)
                 self._running_tunnels[menu_item.title] = server
                 menu_item.state = 1
-                # action_item = rumps.MenuItem(
-                #    "Go -> ", callback=lambda x: print(str(x)))
-                #self.menu.insert_after(menu_item.title, action_item)
+                action_item = rumps.MenuItem(
+                    self._clipboard_item(forward), callback=lambda x: print(str(x)))
+                self.menu.insert_after(menu_item.title, action_item)
                 logging.info("DONE")
+
+    def _clipboard_item(self, forward):
+        label = "\t"
+        if forward.protocol:
+            label = label + " copy url"
+        else:
+            label = label + " copy address and port"
+        return label
 
     def __init__(self):
         super(OrikBarApp, self).__init__(
@@ -58,7 +73,7 @@ class OrikBarApp(rumps.App):
         self._running_tunnels = {}
 
         app_cfg = AppConfigManager()
-        self.configs = app_cfg.sync_file_from_config(ssh_configs)
+        self.configs = app_cfg.sync_file_from_config()
 
         for config in self.configs:
             for forward in config.forewards:

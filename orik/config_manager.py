@@ -118,7 +118,7 @@ class AppConfigManager(object):
                     for fwd in cfg.forewards:
                         writer.writerow(
                             (cfg.host, cfg.host_name, cfg.user, fwd.host, fwd.local_port, fwd.remote_port))
-        else:
+        """ else:
             with open(settings_file_path, 'ra') as cfg_file:
                 cfg_file_reader = list(csv.reader(cfg_file.readlines()[1:]))
                 writer = csv.writer(cfg_file)
@@ -126,7 +126,7 @@ class AppConfigManager(object):
                     for app_cfg in cfg_file_reader:
                         if cfg.host != app_cfg[0]:
                             writer.writerow(
-                                (cfg.host, cfg.host_name, cfg.user, fwd.host, fwd.local_port, fwd.remote_port))
+                                (cfg.host, cfg.host_name, cfg.user, fwd.host, fwd.local_port, fwd.remote_port)) """
         return self.read_file(settings_file_path)
 
     def read_file(self, settings_file_path=SETTINGS_PATH):
