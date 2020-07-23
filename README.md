@@ -40,7 +40,7 @@ The creation of a virtual env is raccomanded
 ```
 pip install py2app
 pip install -r requirements.txt
-python setup.py py2app
+python setup.py py2app --iconfile dwarf-helmet.icns
 ```
 
 The app build is in `dist/orik_ssh.app`
