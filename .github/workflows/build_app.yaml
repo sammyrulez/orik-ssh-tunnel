@@ -18,7 +18,7 @@ jobs:
           pip install -r requirements.txt
       # Add tests run
       - name: Build App
-        run: python setup.py py2app
+        run: python setup.py py2app --iconfile dwarf-helmet.icns
       - name: Build Dmg
         run: |
           hdiutil create /tmp/tmp.dmg -ov -volname "Orik SSH" -fs HFS+ -srcfolder "$GITHUB_WORKSPACE/dist/orik_ssh.app"
