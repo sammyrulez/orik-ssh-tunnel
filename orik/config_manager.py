@@ -94,6 +94,9 @@ class AppConfig(HostConfig):
         else:
             return self.code()
 
+    def __str__(self):
+        return "{}://{}:{} -> {}".format(self.protocol, self.host, self.remote_port, self.local_port)
+
 
 CSV_HEADERS = ["Bastion", "Host Name", "User", "Remote Host", "Remote Port",
                "Local Port", "Alias", "Protocol", "Ask for password", "Custom cert"]

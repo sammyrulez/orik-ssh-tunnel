@@ -8,6 +8,11 @@ from sshtunnel import SSHTunnelForwarder
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
+format_fns = {
+    'http': lambda x: "http://localhost:" + x.local_port,
+    'default': lambda x: "localhost:" + x.local_port
+}
+
 
 class OrikBarApp(rumps.App):
 
@@ -18,7 +23,18 @@ class OrikBarApp(rumps.App):
                 for forward in conf.forewards:
                     logging.info("item x = %s %s %s", menu_title,
                                  forward.display_label(), str(menu_title.endswith(forward.display_label())))
-                    if menu_title.endswith(forward.display_label()):
+                    if forward.display_label() in menu_title:
+                        return (conf, forward)
+        return (None, None)
+
+    def _find_config(self, menu_title):
+        for conf in self.configs:
+            if menu_title.startswith(conf.host):
+                logging.info(conf.forewards)
+                for forward in conf.forewards:
+                    logging.info("item x = %s %s %s", menu_title,
+                                 forward.display_label(), str(menu_title.endswith(forward.display_label())))
+                    if forward.display_label() in menu_title:
                         return (conf, forward)
         return (None, None)
 
@@ -50,21 +66,22 @@ class OrikBarApp(rumps.App):
                     server.start()
                 except Exception as e:
                     logging.error(str(e))
-                logging.info(" SErver started %s", conf.host_name)
+                logging.info(" Server started %s", conf.host_name)
                 self._running_tunnels[menu_item.title] = server
                 menu_item.state = 1
-                action_item = rumps.MenuItem(
-                    self._clipboard_item(forward), callback=lambda x: print(str(x)))
-                self.menu.insert_after(menu_item.title, action_item)
+                msg_window = rumps.Window(
+                    message=menu_item.title + " ssh tunnel activated", title="Orik", dimensions=[320, 32], default_text=self._copy_to_clipboard(menu_item, forward))
+                msg_window.run()
                 logging.info("DONE")
 
-    def _clipboard_item(self, forward):
-        label = "\t"
+    def _copy_to_clipboard(self, menu_item, forward):
+        print("menu_item", menu_item.title)
+        print("forward: \t", forward, format_fns[forward.protocol](forward))
+
         if forward.protocol:
-            label = label + " copy url"
+            return format_fns[forward.protocol](forward)
         else:
-            label = label + " copy address and port"
-        return label
+            return format_fns['default'](forward)
 
     def __init__(self):
         super(OrikBarApp, self).__init__(
