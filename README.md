@@ -26,7 +26,7 @@ If there is any feature you that would be usefull please open a issue
 
 ## Installation
 
-You can download the imgage with the app from the [Releases tab](https://github.com/sammyrulez/orik-ssh-tunnel/releases/download/refs%2Fheads%2Fbuild-app/OrikSSH.dmg)
+You can download the image with the app from the [Releases tab](https://github.com/sammyrulez/orik-ssh-tunnel/releases/download/refs%2Fheads%2Fbuild-app/OrikSSH.dmg)
 
 ## Build from sources:
 
