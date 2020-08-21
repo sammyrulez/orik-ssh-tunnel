@@ -40,11 +40,11 @@ class OrikBarApp(rumps.App):
 
     def _host_callback(self, menu_item):
         logging.info("click %s %s", menu_item.title, menu_item.state)
-
+        conf, forward = self._find_config(menu_item.title)
         if menu_item.state:
-            msg_window = self._build_window(
-                menu_item, forward, "Do you want to stop ssh tunneling with " + menu_item.title + " ?")
-            confirm = msg_window.run()
+            msg_window = rumps.Window(
+                message="Do you want to stop ssh tunneling with " + menu_item.title + " ?", title="Orik", cancel=True, dimensions=[320, 32], default_text=self._format_url(menu_item, forward))
+            response = msg_window.run()
             if response.clicked:
                 if menu_item.title in self._running_tunnels.keys():
                     self._running_tunnels[menu_item.title].stop()
@@ -52,7 +52,6 @@ class OrikBarApp(rumps.App):
                 menu_item.state = 0
         else:
             logging.info("Init tunnel ")
-            conf, forward = self._find_config(menu_item.title)
 
             if conf:
                 logging.info("tunnel host: %s, user %s , forward host %s:%d",
@@ -71,19 +70,14 @@ class OrikBarApp(rumps.App):
                 except Exception as e:
                     logging.error(str(e))
                 logging.info(" Server started %s", conf.host_name)
-                self._running_tunnels[me_build_windowe] = server
+                self._running_tunnels[menu_item.title] = server
                 menu_item.state = 1
-                msg_window = self._build_window(menu_item, forward,
-                                                menu_item.title + " ssh tunnel activated")
-                meg_window.run()
+                msg_window = rumps.Window(
+                    message=menu_item.title + " ssh tunnel activated", title="Orik", dimensions=[320, 32], default_text=self._format_url(menu_item, forward))
+                msg_window.run()
                 logging.info("DONE")
 
-    def _build_window(self, menu_item, forward, message):
-        msg_window = rumps.Window(
-            message=message, title="Orik", dimensions=[320, 32], default_text=self._copy_to_clipboard(menu_item, forward))
-        return msg_window
-
-    def _copy_to_clipboard(self, menu_item, forward):
+    def _format_url(self, menu_item, forward):
         print("menu_item", menu_item.title)
         print("forward: \t", forward, format_fns[forward.protocol](forward))
 
