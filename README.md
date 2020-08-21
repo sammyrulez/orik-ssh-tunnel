@@ -48,7 +48,7 @@ The app build is in `dist/orik_ssh.app`
 ## Todos
 
 - [ ] More unit tests
-- [ ] Proper logging
+- [x] Proper logging
 - [x] Issue template
 - [x] Github actions
 - [x] Publish app package

@@ -1,12 +1,22 @@
 import logging
 import sys
 import rumps
-from orik.config_manager import AppConfigManager
+from orik.config_manager import AppConfigManager, APP_HOME
 import paramiko
 from sshtunnel import SSHTunnelForwarder
 
 
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+def _init_logging_():
+    logger = logging.getLogger('spam_application')
+    fh = logging.FileHandler(APP_HOME+'orik.log')
+    formatter = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    fh.setFormatter(formatter)
+    fh.setLevel(logging.DEBUG)
+    logger.addHandler(fh)
+
+    logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+
 
 format_fns = {
     'http': lambda x: "http://localhost:" + x.remote_port,
@@ -85,4 +95,5 @@ class OrikBarApp(rumps.App):
 
 
 if __name__ == "__main__":
+    _init_logging_()
     OrikBarApp().run()

@@ -101,7 +101,8 @@ class AppConfig(HostConfig):
 
 CSV_HEADERS = ["Bastion", "Host Name", "User", "Remote Host", "Remote Port",
                "Local Port", "Alias", "Protocol", "Ask for password", "Custom cert"]
-SETTINGS_PATH = home+'/.orik_ssh/config.csv'
+APP_HOME = home+'/.orik_ssh/'
+SETTINGS_PATH = APP_HOME+'config.csv'
 
 
 class AppConfigManager(object):
