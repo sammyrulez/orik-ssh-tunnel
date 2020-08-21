@@ -10,6 +10,8 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 format_fns = {
     'http': lambda x: "http://localhost:" + x.remote_port,
+    'https': lambda x: "https://localhost:" + x.remote_port,
+    'ssh': lambda x: "ssh -p" + x.remote_port + " " + x.user + "@localhost",
     'default': lambda x: "localhost:" + x.remote_port
 }
 
@@ -27,59 +29,40 @@ class OrikBarApp(rumps.App):
                         return (conf, forward)
         return (None, None)
 
-    def _find_config(self, menu_title):
-        for conf in self.configs:
-            if menu_title.startswith(conf.host):
-                logging.info(conf.forewards)
-                for forward in conf.forewards:
-                    logging.info("item x = %s %s %s", menu_title,
-                                 forward.display_label(), str(menu_title.endswith(forward.display_label())))
-                    if forward.display_label() in menu_title:
-                        return (conf, forward)
-        return (None, None)
-
     def _host_callback(self, menu_item):
         logging.info("click %s %s", menu_item.title, menu_item.state)
         conf, forward = self._find_config(menu_item.title)
+
         if menu_item.state:
             msg_window = rumps.Window(
                 message="Do you want to stop ssh tunneling with " + menu_item.title + " ?", title="Orik", cancel=True, dimensions=[320, 32], default_text=self._format_url(menu_item, forward))
             response = msg_window.run()
             if response.clicked:
                 if menu_item.title in self._running_tunnels.keys():
-                    self._running_tunnels[menu_item.title].stop()
+                    server = self._running_tunnels[menu_item.title]
+                    self.stop_tunnel(server)
                     self._running_tunnels[menu_item.title] = None
                 menu_item.state = 0
         else:
             logging.info("Init tunnel ")
-
             if conf:
                 logging.info("tunnel host: %s, user %s , forward host %s:%d",
                              conf.host_name, conf.user, forward.host, int(forward.remote_port))
                 try:
-                    server = SSHTunnelForwarder(
-                        conf.host_name,
-                        ssh_username=conf.user,
-                        remote_bind_address=(
-                            forward.host, int(forward.remote_port)),
-                        local_bind_address=(
-                            "0.0.0.0", int(forward.local_port)),
-                        # ssh_password="xyz"
-                    )
-                    server.start()
+                    server = self.start_tunnel(conf, forward)
+                    newvariable284 = server
+                    menu_item.state = 1
+                    msg_window = rumps.Window(
+                        message=menu_item.title + " ssh tunnel activated", title="Orik", dimensions=[320, 32], default_text=self._format_url(menu_item, forward))
+                    msg_window.run()
+                    logging.info("DONE")
                 except Exception as e:
                     logging.error(str(e))
-                logging.info(" Server started %s", conf.host_name)
-                self._running_tunnels[menu_item.title] = server
-                menu_item.state = 1
-                msg_window = rumps.Window(
-                    message=menu_item.title + " ssh tunnel activated", title="Orik", dimensions=[320, 32], default_text=self._format_url(menu_item, forward))
-                msg_window.run()
-                logging.info("DONE")
+                    error_window = rumps.Window(
+                        message=" Ssh tunnel  error : " + str(e), title="Orik", dimensions=[0, 0])
+                    error_window.run()
 
     def _format_url(self, menu_item, forward):
-        print("menu_item", menu_item.title)
-        print("forward: \t", forward, format_fns[forward.protocol](forward))
 
         if forward.protocol:
             return format_fns[forward.protocol](forward)

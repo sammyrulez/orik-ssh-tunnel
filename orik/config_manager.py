@@ -86,6 +86,7 @@ class AppConfig(HostConfig):
         self.ask_for_password = False
         self.label = None
         self.protocol = None
+        self.user = None
         super().__init__()
 
     def display_label(self):
@@ -147,6 +148,7 @@ class AppConfigManager(object):
 
                 uc.user = row[2]
                 ac = AppConfig()
+                ac.user = row[2]
                 ac.host = row[3]
                 ac.remote_port = row[4]
                 ac.local_port = row[5]

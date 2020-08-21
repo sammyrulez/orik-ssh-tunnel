@@ -48,13 +48,15 @@ The app build is in `dist/orik_ssh.app`
 ## Todos
 
 - [ ] More unit tests
-- [x] ~~Issue template~~
-- [x] ~~Github actions~~
-- [x] ~~Publish app package~~
+- [ ] Proper logging
+- [x] Issue template
+- [x] Github actions
+- [x] Publish app package
 - [ ] Add  coverage badge
 - [ ] Add  version badge
 - [ ] Embed python3 runtime
-- [ ] build a website
+- [x] build a website
+- [ ] Close all tunnels on quit
 
 
 
