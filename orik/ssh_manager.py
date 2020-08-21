@@ -2,11 +2,11 @@ from sshtunnel import SSHTunnelForwarder
 import logging
 
 
-def stop_tunnel(self, server):
+def stop_tunnel(server):
     server.stop()
 
 
-def start_tunnel(self, conf, forward):
+def start_tunnel(conf, forward):
     server = SSHTunnelForwarder(
         conf.host_name,
         ssh_username=conf.user,

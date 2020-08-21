@@ -2,6 +2,7 @@ import logging
 import sys
 import rumps
 from orik.config_manager import AppConfigManager, APP_HOME
+from orik import ssh_manager
 import paramiko
 from sshtunnel import SSHTunnelForwarder
 
@@ -50,7 +51,7 @@ class OrikBarApp(rumps.App):
             if response.clicked:
                 if menu_item.title in self._running_tunnels.keys():
                     server = self._running_tunnels[menu_item.title]
-                    self.stop_tunnel(server)
+                    ssh_manager.stop_tunnel(server)
                     self._running_tunnels[menu_item.title] = None
                 menu_item.state = 0
         else:
@@ -59,8 +60,8 @@ class OrikBarApp(rumps.App):
                 logging.info("tunnel host: %s, user %s , forward host %s:%d",
                              conf.host_name, conf.user, forward.host, int(forward.remote_port))
                 try:
-                    server = self.start_tunnel(conf, forward)
-                    newvariable284 = server
+                    server = ssh_manager.start_tunnel(conf, forward)
+                    self._running_tunnels[menu_item.title] = server
                     menu_item.state = 1
                     msg_window = rumps.Window(
                         message=menu_item.title + " ssh tunnel activated", title="Orik", dimensions=[320, 32], default_text=self._format_url(menu_item, forward))
