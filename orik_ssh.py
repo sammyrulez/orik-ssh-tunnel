@@ -9,8 +9,8 @@ from sshtunnel import SSHTunnelForwarder
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 format_fns = {
-    'http': lambda x: "http://localhost:" + x.local_port,
-    'default': lambda x: "localhost:" + x.local_port
+    'http': lambda x: "http://localhost:" + x.remote_port,
+    'default': lambda x: "localhost:" + x.remote_port
 }
 
 
