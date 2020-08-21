@@ -86,6 +86,7 @@ class AppConfig(HostConfig):
         self.ask_for_password = False
         self.label = None
         self.protocol = None
+        self.user = None
         super().__init__()
 
     def display_label(self):
@@ -94,10 +95,14 @@ class AppConfig(HostConfig):
         else:
             return self.code()
 
+    def __str__(self):
+        return "{}://{}:{} -> {}".format(self.protocol, self.host, self.remote_port, self.local_port)
+
 
 CSV_HEADERS = ["Bastion", "Host Name", "User", "Remote Host", "Remote Port",
                "Local Port", "Alias", "Protocol", "Ask for password", "Custom cert"]
-SETTINGS_PATH = home+'/.orik_ssh/config.csv'
+APP_HOME = home+'/.orik_ssh/'
+SETTINGS_PATH = APP_HOME+'config.csv'
 
 
 class AppConfigManager(object):
@@ -118,7 +123,7 @@ class AppConfigManager(object):
                     for fwd in cfg.forewards:
                         writer.writerow(
                             (cfg.host, cfg.host_name, cfg.user, fwd.host, fwd.local_port, fwd.remote_port))
-        else:
+        """ else:
             with open(settings_file_path, 'ra') as cfg_file:
                 cfg_file_reader = list(csv.reader(cfg_file.readlines()[1:]))
                 writer = csv.writer(cfg_file)
@@ -126,7 +131,7 @@ class AppConfigManager(object):
                     for app_cfg in cfg_file_reader:
                         if cfg.host != app_cfg[0]:
                             writer.writerow(
-                                (cfg.host, cfg.host_name, cfg.user, fwd.host, fwd.local_port, fwd.remote_port))
+                                (cfg.host, cfg.host_name, cfg.user, fwd.host, fwd.local_port, fwd.remote_port)) """
         return self.read_file(settings_file_path)
 
     def read_file(self, settings_file_path=SETTINGS_PATH):
@@ -144,6 +149,7 @@ class AppConfigManager(object):
 
                 uc.user = row[2]
                 ac = AppConfig()
+                ac.user = row[2]
                 ac.host = row[3]
                 ac.remote_port = row[4]
                 ac.local_port = row[5]
