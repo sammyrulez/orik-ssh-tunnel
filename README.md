@@ -15,7 +15,7 @@ If there is any feature you that would be usefullplease open an issue
 * Read your _~/.ssh/config_ file and build a top bar menu
 * Open an ssh tunnel on the selected item
 * Preferences and labeling: you can label remote hosts (especially those that do not have DNS or very long hostnames ) with a short name ( ie _"Database"_ ) for each bastion. Preferences are managed with a simple CSV file and you can share it (or portions of it )with your coworkers 
-* _"copy url in clipboard"_: if you set in the preferences CVS file the protocol to use on a specific port, the ready to use url will be copied into the clipboard. Supported protocols : _http, https, ssh_. If no protol is specified then _localhost:local_port_number_ format will be used
+* _"copy url in clipboard"_: if you set in the preferences CVS file the protocol to use on a specific port, the ready to use URL will be copied into the clipboard. Supported protocols : _http, https, ssh_. If no protocol is specified then _localhost:local_port_number_ format will be used
 
 
 ## Planned Features
