@@ -21,7 +21,7 @@ jobs:
         run: python setup.py py2app --iconfile dwarf-helmet.icns
       - name: Build Dmg
         run: |
-          hdiutil create /tmp/tmp.dmg -ov -volname "Orik SSH" -fs HFS+ -srcfolder "$GITHUB_WORKSPACE/dist/orik_ssh.app"
+          hdiutil create /tmp/tmp.dmg -ov -volname "Orik SSH" -fs HFS+ -srcfolder "$GITHUB_WORKSPACE/dist"
           hdiutil convert /tmp/tmp.dmg -format UDZO -o OrikSSH.dmg
 
       - name: Create Release
