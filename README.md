@@ -5,24 +5,24 @@
 
 Mac OS SSH tunnel manager UI
 
-Tired of having hard time remembering what tulle was active and not, what remote service was what, poer numebr binding... I end up building this tool. I hope it helps you as well.
+Tired of having a hard time remembering what tulle was active and not, what remote service was what, port number binding... I end up building this tool. I hope it helps you as well.
 
-If there is any feature you that would be usefull please open a issue
+If there is any feature you that would be usefullplease open an issue
 
 
 ## Features
 
 * Read your _~/.ssh/config_ file and build a top bar menu
-* Open a ssh tunnel on the selected item
-* Preferences and labeling: you can label remote hosts (ecpetialy those that do not have dns or very long host names ) with a short name ( ie _"Database"_ ) for each bastion. Preferences are managed with a simple CSV file and you can share it (or portions of it )with your coworkers 
-* _"copy url in clipboard"_: if you set in te prefernces the protocl to use on a specific port, the ready to use url will be copied into the clipboard. supported urls : _http, https, ssh_. If no protol is specified then _localhost:local_port_number_ format will be used
+* Open an ssh tunnel on the selected item
+* Preferences and labeling: you can label remote hosts (especially those that do not have DNS or very long hostnames ) with a short name ( ie _"Database"_ ) for each bastion. Preferences are managed with a simple CSV file and you can share it (or portions of it )with your coworkers 
+* _"copy url in clipboard"_: if you set in the preferences CVS file the protocol to use on a specific port, the ready to use url will be copied into the clipboard. Supported protocols : _http, https, ssh_. If no protol is specified then _localhost:local_port_number_ format will be used
 
 
 ## Planned Features
 
 
-* Ask for password and support password protectect custom key files
-* Prefereces GUI
+* Ask for password and support password protected custom key files
+* Preferences GUI
 
 ## Installation
 
@@ -35,7 +35,7 @@ git clone https://github.com/sammyrulez/orik-ssh-tunnel.git
 cd orik-ssh-tunnel
 ```
 
-The creation of a virtual env is raccomanded
+The creation of a virtual env is recommended
 
 ```
 pip install py2app
