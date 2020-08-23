@@ -1,8 +1,8 @@
 name: Build App Package
 on:
   push:
-    branches:
-      - "main"
+    tags:
+      - "v*"
 
 jobs:
   build:
