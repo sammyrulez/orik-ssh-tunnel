@@ -57,6 +57,7 @@ The app build is in `dist/orik_ssh.app`
 - [ ] Embed python3 runtime
 - [x] build a website
 - [ ] Close all tunnels on quit
+- [ ] Find meaning full label for_"Copy url"_
 
 
 

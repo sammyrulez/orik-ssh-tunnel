@@ -1,5 +1,6 @@
 import logging
 import sys
+import subprocess
 import rumps
 from orik.config_manager import AppConfigManager, APP_HOME
 from orik import ssh_manager
@@ -40,20 +41,33 @@ class OrikBarApp(rumps.App):
                         return (conf, forward)
         return (None, None)
 
+    def _write_to_clipboard(self, output):
+        process = subprocess.Popen(
+            'pbcopy', env={'LANG': 'en_US.UTF-8'}, stdin=subprocess.PIPE)
+        process.communicate(output.encode('utf-8'))
+
+    def _ask_window(self, menu_item, has_cancel_btn):
+        msg_window = rumps.Window(
+            message="Do you want to stop ssh tunneling with " + menu_item.title + " ?", title="Orik", cancel=has_cancel_btn, dimensions=[0, 0])
+        msg_window.add_button("Copy url")
+        response = msg_window.run()
+        return response
+
     def _host_callback(self, menu_item):
         logging.info("click %s %s", menu_item.title, menu_item.state)
         conf, forward = self._find_config(menu_item.title)
 
         if menu_item.state:
-            msg_window = rumps.Window(
-                message="Do you want to stop ssh tunneling with " + menu_item.title + " ?", title="Orik", cancel=True, dimensions=[320, 32], default_text=self._format_url(menu_item, forward))
-            response = msg_window.run()
-            if response.clicked:
+            response = self._ask_window(menu_item, True)
+            logging.info(response.clicked)
+            if response.clicked == 1:
                 if menu_item.title in self._running_tunnels.keys():
                     server = self._running_tunnels[menu_item.title]
                     ssh_manager.stop_tunnel(server)
                     self._running_tunnels[menu_item.title] = None
                 menu_item.state = 0
+            self._check_copy_btn(response, menu_item, forward)
+
         else:
             logging.info("Init tunnel ")
             if conf:
@@ -62,16 +76,21 @@ class OrikBarApp(rumps.App):
                 try:
                     server = ssh_manager.start_tunnel(conf, forward)
                     self._running_tunnels[menu_item.title] = server
-                    menu_item.state = 1
-                    msg_window = rumps.Window(
-                        message=menu_item.title + " ssh tunnel activated", title="Orik", dimensions=[320, 32], default_text=self._format_url(menu_item, forward))
-                    msg_window.run()
-                    logging.info("DONE")
+                    response = self._ask_window(menu_item, False)
+                    logging.info(response.clicked)
+                    self._check_copy_btn(response, menu_item, forward)
+
                 except Exception as e:
                     logging.error(str(e))
                     error_window = rumps.Window(
                         message=" Ssh tunnel  error : " + str(e), title="Orik", dimensions=[0, 0])
                     error_window.run()
+                menu_item.state = 1
+                logging.info("DONE")
+
+    def _check_copy_btn(self, response, menu_item, forward):
+        if response.clicked == 2:
+            self._write_to_clipboard(self._format_url(menu_item, forward))
 
     def _format_url(self, menu_item, forward):
 
