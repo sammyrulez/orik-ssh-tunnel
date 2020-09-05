@@ -1,7 +1,8 @@
 # Orik-SSH
 
-[![Build App Package](https://github.com/sammyrulez/orik-ssh-tunnel/workflows/Build%20App%20Package/badge.svg)](https://github.com/sammyrulez/orik-ssh-tunnel/releases/download/refs%2Fheads%2Fbuild-app/OrikSSH.dmg)
+[![Build App Package](https://github.com/sammyrulez/orik-ssh-tunnel/workflows/Build%20App%20Package/badge.svg)](https://github.com/sammyrulez/orik-ssh-tunnel/releases/download/v0.5.1/OrikSSH.dmg)
 
+![](https://github.com/sammyrulez/orik-ssh-tunnel/raw/main/dwarf-helmet.png | width=240)
 
 Mac OS SSH tunnel manager UI
 
@@ -27,6 +28,9 @@ If there is any feature you that would be usefull please open a issue
 ## Installation
 
 You can download the image with the app from the [Releases tab](https://github.com/sammyrulez/orik-ssh-tunnel/releases/download/refs%2Fheads%2Fbuild-app/OrikSSH.dmg)
+
+Orik is currently not code-signed for macOS. See the last section of [This page ]https://support.apple.com/en-us/HT202491) for instructions on allowing Orik to run anyway.
+
 
 ## Build from sources:
 
@@ -55,6 +59,12 @@ The app build is in `dist/orik_ssh.app`
 - [ ] Add  version badge
 - [ ] Embed python3 runtime
 - [ ] build a website
+
+
+
+## Where the name Orik came from?
+
+Orik is the name of my son's D&D player. He is a Storm Cleric Dwarf. Sentinel of the tunnels  .
 
 
 
