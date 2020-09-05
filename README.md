@@ -1,7 +1,10 @@
 # Orik-SSH
 
-[![Build App Package](https://github.com/sammyrulez/orik-ssh-tunnel/workflows/Build%20App%20Package/badge.svg)](https://github.com/sammyrulez/orik-ssh-tunnel/releases/download/refs%2Fheads%2Fbuild-app/OrikSSH.dmg)
+[![Build App Package](https://github.com/sammyrulez/orik-ssh-tunnel/workflows/Build%20App%20Package/badge.svg)](https://github.com/sammyrulez/orik-ssh-tunnel/releases/download/v0.5.1/OrikSSH.dmg)
 
+<p align="center">
+  <img src="https://github.com/sammyrulez/orik-ssh-tunnel/raw/main/dwarf-helmet.png" width="400">
+  </p>
 
 Mac OS SSH tunnel manager UI
 
@@ -13,9 +16,11 @@ If there is any feature you that would be usefullplease open an issue
 ## Features
 
 * Read your _~/.ssh/config_ file and build a top bar menu
-* Open an ssh tunnel on the selected item
-* Preferences and labeling: you can label remote hosts (especially those that do not have DNS or very long hostnames ) with a short name ( ie _"Database"_ ) for each bastion. Preferences are managed with a simple CSV file and you can share it (or portions of it )with your coworkers 
-* _"copy url in clipboard"_: if you set in the preferences CVS file the protocol to use on a specific port, the ready to use URL will be copied into the clipboard. Supported protocols : _http, https, ssh_. If no protocol is specified then _localhost:local_port_number_ format will be used
+
+* Open a ssh tunnel on the selected item
+* Preferences and labeling: you can label remote hosts (ecpetialy those that do not have dns or very long host names ) with a short name ( ie _"Database"_ ) for each bastion. Preferences are managed with a simple CSV file and you can share it (or portions of it )with your coworkers 
+* _"copy url in clipboard"_
+
 
 
 ## Planned Features
@@ -24,9 +29,13 @@ If there is any feature you that would be usefullplease open an issue
 * Ask for password and support password protected custom key files
 * Preferences GUI
 
+
 ## Installation
 
-You can download the image with the app from the [Releases tab](https://github.com/sammyrulez/orik-ssh-tunnel/releases/download/refs%2Fheads%2Fbuild-app/OrikSSH.dmg)
+You can download the image with the app from the [Releases tab](https://github.com/sammyrulez/orik-ssh-tunnel/releases/download/v0.5.1/OrikSSH.dmg)
+
+Orik is currently not code-signed for macOS. See the last section of [This page ]https://support.apple.com/en-us/HT202491) for instructions on allowing Orik to run anyway.
+
 
 ## Build from sources:
 
@@ -58,6 +67,12 @@ The app build is in `dist/orik_ssh.app`
 - [x] build a website
 - [ ] Close all tunnels on quit
 - [ ] Find meaning full label for_"Copy url"_
+
+
+
+## Where the name Orik came from?
+
+Orik is the name of my son's D&D player. He is a Storm Cleric Dwarf. Sentinel of the tunnels  .
 
 
 
