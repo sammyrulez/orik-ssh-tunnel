@@ -18,13 +18,13 @@ If there is any feature you that would be usefull please open a issue
 * Read your _~/.ssh/config_ file and build a top bar menu
 * Open a ssh tunnel on the selected item
 * Preferences and labeling: you can label remote hosts (ecpetialy those that do not have dns or very long host names ) with a short name ( ie _"Database"_ ) for each bastion. Preferences are managed with a simple CSV file and you can share it (or portions of it )with your coworkers 
+* _"copy url in clipboard"_
 
 
 ## Planned Features
 
 
 * Ask for password and support password protectect custom key files
-* _"copy url in clipboard"_
 * Prefereces GUI
 
 ## Installation
