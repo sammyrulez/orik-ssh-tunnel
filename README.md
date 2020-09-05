@@ -54,6 +54,27 @@ python setup.py py2app --iconfile dwarf-helmet.icns
 
 The app build is in `dist/orik_ssh.app`
 
+## Configuration
+
+The configuration file is located in your home directory: `/Users/[username/].orik_ssh/config.csv` . If you have a `.ssh/config` the  csv file  it is automaticaly created when you run Orik for the first time. The schema is the following
+
+```
+Bastion,Host Name,User,Remote Host,Remote Port,Local Port,Alias,Protocol,Ask for password,Custom cert
+```
+
+* Bastion
+* Host Name
+* User
+* Remote Host
+* Remote Port
+* Local Port
+* Alias label for the tunnel/remote host
+* Protocol supported for url creation http, https, ssh
+* Ask for password
+* Custom cert
+
+
+
 ## Todos
 
 - [ ] More unit tests
