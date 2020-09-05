@@ -2,9 +2,7 @@
 
 [![Build App Package](https://github.com/sammyrulez/orik-ssh-tunnel/workflows/Build%20App%20Package/badge.svg)](https://github.com/sammyrulez/orik-ssh-tunnel/releases/download/v0.5.1/OrikSSH.dmg)
 
-
-![Bla](https://github.com/sammyrulez/orik-ssh-tunnel/raw/main/dwarf-helmet.png | width=240)
-
+<img src="https://github.com/sammyrulez/orik-ssh-tunnel/raw/main/dwarf-helmet.png" width="480">
 
 Mac OS SSH tunnel manager UI
 
