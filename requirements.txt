@@ -3,7 +3,7 @@ cffi==1.14.0
 cryptography==2.9.2
 paramiko==2.7.1
 pluggy==0.13.1
-py==1.9.0
+py==1.10.0
 pycparser==2.20
 PyNaCl==1.4.0
 pyparsing==2.4.7
